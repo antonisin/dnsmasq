@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+    dnsmasq:
+        restart: always
+        build: .
+        container_name: 'dnsmasq'
+        volumes:
+            - ./dnsmasq.conf:/etc/dnsmasq.conf
+        expose: [53]
+        ports:
+            - "53:53"
+            - "53:53/udp"
+        cap_add:
+            - NET_ADMIN
+        networks: [ default ]
+
+networks:
+    default:
+        name: proxy
+        external: true
